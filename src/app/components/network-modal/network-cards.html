@@ -1,0 +1,61 @@
+<div nz-flex nzGap="middle" nzWrap="wrap" nzJustify="flex-start" style="padding-left: 150px" class="mainContainer">
+
+  @for (network of networks(); track network.id){
+    <div class="networkCard">
+        <h2 nz-typography>{{ network.name }}</h2>
+        <div class="networkCardItem">
+          <div>
+            <p nz-typography>Subnet:</p>
+            <h4 nz-typography>{{ network.subnet }}</h4>
+          </div>
+          <div>
+            <p nz-typography>Netmask:</p>
+            <h4 nz-typography>{{ network.netmask }}</h4>
+          </div>
+        </div>
+      <div class="networkCardItem">
+        <div>
+          <p nz-typography>Start range:</p>
+          <h4 nz-typography>{{ network.start_range }}</h4>
+        </div>
+        <div>
+          <p nz-typography>End range:</p>
+          <h4 nz-typography>{{ network.end_range }}</h4>
+        </div>
+      </div>
+      <div class="networkCardItem">
+        <div>
+          <p nz-typography>Default lease time:</p>
+          <h4 nz-typography>{{ network.default_lease_time }}</h4>
+        </div>
+        <div>
+          <p nz-typography>Max lease time:</p>
+          <h4 nz-typography>{{ network.max_lease_time }}</h4>
+        </div>
+      </div>
+      <div class="networkCardItem">
+        <div>
+          <p nz-typography>Router:</p>
+          <h4 nz-typography>{{ network.router }}</h4>
+        </div>
+      </div>
+      <div class="networkCardItem">
+        <div>
+          <p nz-typography>Primary DNS:</p>
+          <h4 nz-typography>{{ network.primary_dns }}</h4>
+        </div>
+        <div>
+          <p nz-typography>Secondary DNS:</p>
+          <h4 nz-typography>{{ network.secondary_dns }}</h4>
+        </div>
+      </div>
+        <div nz-flex nzJustify="space-between" nzAlign="center" >
+          <div>
+          <p nz-typography>Devices on network:</p>
+          <h4 nz-typography>{{network.devices_count}}</h4>
+          </div>
+      <button nz-button nzType="primary" nzShape="round">Edit network</button>
+        </div>
+    </div>
+  }
+</div>

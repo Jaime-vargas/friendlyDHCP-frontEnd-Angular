@@ -1,0 +1,16 @@
+<nz-table [nzData]="devices()" #tableDevices >
+<thead>
+<tr>
+  @for (col of columns(); track col.key) {
+    <th>{{ col.title }}</th>
+  }
+</tr>
+</thead>
+  <tbody>
+    @for (device of devices(); track device.id){
+      <tr>
+        <td>{{device.category}}</td>
+      </tr>
+    }
+  </tbody>
+</nz-table>

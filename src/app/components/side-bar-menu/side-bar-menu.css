@@ -1,0 +1,17 @@
+.side-bar-menu {
+  background: #fafafa ;
+  box-shadow: 1px 1px 5px #bfbfbf;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  height: 100%;
+  gap: 1rem;
+}
+
+.side-bar-menu li {
+  font-size: 1.5rem;
+}
+[nz-menu] {
+  width: 150px;
+}

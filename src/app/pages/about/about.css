@@ -1,0 +1,36 @@
+.mainContainer{
+  margin-bottom: 40px;
+  margin-left: 150px;
+  height:calc(100dvh - 80px);
+}
+.project-description{
+  background: #fff;
+  padding:10px;
+  box-shadow: 1px 1px 10px #bfbfbf;
+}
+.project-description p{
+  color:#2d2f2e;
+}
+.card {
+  background: #fafafa;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px #bfbfbf;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 400px;
+  gap: 20px;
+}
+.card p,.card h4, h1{
+  margin: 0;
+  padding: 0;
+}
+.link {
+  border-radius: 10px;
+  padding: 10px;
+}
+.link:hover{
+  background: #f1f1f1;
+}

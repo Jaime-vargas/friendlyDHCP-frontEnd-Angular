@@ -1,0 +1,37 @@
+.mainContainer{
+  overflow: hidden;
+}
+.networkCard {
+  background: #fafafa;
+  border-radius: 10px;
+  border: #a8a8a8 solid 1px;
+  box-shadow: 1px 1px 5px #bfbfbf;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 380px;
+  gap: 16px;
+}
+
+.networkCardItem{
+  align-items: baseline;
+  display: flex;
+  justify-content: start;
+  gap: 16px;
+}
+
+.networkCard p,
+.networkCard h2,
+.networkCard h4{
+  margin: 0;
+}
+
+.networkCard h4 {
+  border-radius: 5px;
+  background: #ededed;
+  padding: 0 5px;
+}
+
+
+
+

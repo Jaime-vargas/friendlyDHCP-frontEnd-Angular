@@ -1,1 +1,9 @@
-<p>networks-page works!</p>
+<app-top-bar>
+  <button nz-button nzType="primary" nzShape="round"
+          (click)="handleModalVisible()">New Network</button>
+</app-top-bar>
+<div class="mainContainer">
+  <app-network-form-modal [isModalVisible]="modalVisible()" ></app-network-form-modal>
+  <app-network-modal [networks]="networks()"></app-network-modal>
+</div>
+

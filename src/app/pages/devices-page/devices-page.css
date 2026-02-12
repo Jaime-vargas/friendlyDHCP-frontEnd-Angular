@@ -1,0 +1,5 @@
+.mainContainer{
+  margin-top: 80px;
+  margin-left: 150px;
+  height:calc(100dvh - 80px);
+}
