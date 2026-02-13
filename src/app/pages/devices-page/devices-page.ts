@@ -1,6 +1,5 @@
 import {Component, inject, signal} from '@angular/core';
 import {TopBar} from '../../components/top-bar/top-bar';
-import {NzTableComponent} from 'ng-zorro-antd/table';
 import {DevicesTable} from '../../components/devices-table/devices-table';
 
 import {DeviceApiService} from '../../service/device-api.service';
@@ -10,7 +9,6 @@ import {Device} from '../../models/Device';
   selector: 'app-devices-page',
   imports: [
     TopBar,
-    NzTableComponent,
     DevicesTable
   ],
   templateUrl: './devices-page.html',
@@ -29,4 +27,6 @@ export class DevicesPage {
       this.devices.set(devices);
     });
   }
+
+
 }

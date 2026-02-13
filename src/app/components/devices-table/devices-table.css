@@ -1,0 +1,21 @@
+.table {
+  min-width:600px;
+  max-width: 1000px;
+}
+
+.table > tbody > tr > td {
+  background: #2d2f2e;
+}
+.header{
+  background: #e6f7ff;
+  color: #004aad;
+}
+.filters{
+  margin-bottom: 2rem;
+  min-width:600px;
+  max-width: 1000px;
+}
+
+.input-search{
+  width: 180px;
+}

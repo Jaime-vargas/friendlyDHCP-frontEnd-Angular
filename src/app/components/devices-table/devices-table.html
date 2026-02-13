@@ -1,15 +1,49 @@
-<nz-table [nzData]="devices()" #tableDevices >
-<thead>
-<tr>
+<div nz-flex  nzWrap="wrap" class="filters" nzGap="small">
+  <div class="input-search">
+    <nz-form-label>Filter by name</nz-form-label>
+    <nz-input-search nzAllowClear (nzSearch)="categoryFilter()">
+      <input nz-input placeholder="Filter by name">
+    </nz-input-search>
+  </div>
+  <div class="input-search">
+    <nz-form-label>Filter by category</nz-form-label>
+    <nz-input-search nzAllowClear >
+      <input nz-input placeholder="Filter by category">
+    </nz-input-search>
+  </div>
+  <div class="input-search">
+    <nz-form-label>Filter by MAC address</nz-form-label>
+    <nz-input-search nzAllowClear >
+      <input nz-input placeholder="Filter by MAC address">
+    </nz-input-search>
+  </div>
+  <div class="input-search">
+    <nz-form-label>Filter by IP address</nz-form-label>
+    <nz-input-search nzAllowClear >
+      <input nz-input placeholder="Filter by IP address">
+    </nz-input-search>
+  </div>
+  <div nz-flex nzVertical class="input-search">
+    <nz-form-label>Filter by network</nz-form-label>
+    <nz-select ></nz-select>
+  </div>
+</div>
+<nz-table [nzData]="filterDevices()" #tableDevices class="table" >
+<thead nzThead>
+<tr nzTr>
   @for (col of columns(); track col.key) {
-    <th>{{ col.title }}</th>
+    <th class="header"><strong>{{ col.title }}</strong></th>
   }
 </tr>
 </thead>
   <tbody>
-    @for (device of devices(); track device.id){
+    @for (data of tableDevices.data; track data){
       <tr>
-        <td>{{device.category}}</td>
+        <td>{{data.name}}</td>
+        <td>{{data.category}}</td>
+        <td>{{data.mac_address}}</td>
+        <td>{{data.ip_address}}</td>
+        <td>{{data.network_name}}</td>
       </tr>
     }
   </tbody>
