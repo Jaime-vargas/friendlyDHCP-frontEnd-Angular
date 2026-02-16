@@ -7,7 +7,6 @@ import {TopBarService} from './top-bar.service';
 @Component({
   selector: 'app-top-bar',
   imports: [
-    NzButtonComponent,
     NzFlexDirective,
     NzTypographyComponent
   ],

@@ -1,31 +1,35 @@
 <div nz-flex  nzWrap="wrap" class="filters" nzGap="small">
   <div class="input-search">
     <nz-form-label>Filter by name</nz-form-label>
-    <nz-input-search nzAllowClear (nzSearch)="categoryFilter()">
-      <input nz-input placeholder="Filter by name">
+    <nz-input-search nzAllowClear>
+      <input nz-input placeholder="Filter by name" [ngModel]="nameFilter()" (ngModelChange)="nameFilter.set($event)" >
     </nz-input-search>
   </div>
   <div class="input-search">
     <nz-form-label>Filter by category</nz-form-label>
     <nz-input-search nzAllowClear >
-      <input nz-input placeholder="Filter by category">
+      <input nz-input placeholder="Filter by category" [ngModel]="categoryFilter()" (ngModelChange)="categoryFilter.set($event)">
     </nz-input-search>
   </div>
   <div class="input-search">
     <nz-form-label>Filter by MAC address</nz-form-label>
     <nz-input-search nzAllowClear >
-      <input nz-input placeholder="Filter by MAC address">
+      <input nz-input placeholder="Filter by MAC address" [ngModel]="macFilter()" (ngModelChange)="macFilter.set($event)">
     </nz-input-search>
   </div>
   <div class="input-search">
     <nz-form-label>Filter by IP address</nz-form-label>
     <nz-input-search nzAllowClear >
-      <input nz-input placeholder="Filter by IP address">
+      <input nz-input placeholder="Filter by IP address" [ngModel]="ipFilter()" (ngModelChange)="ipFilter.set($event)">
     </nz-input-search>
   </div>
   <div nz-flex nzVertical class="input-search">
     <nz-form-label>Filter by network</nz-form-label>
-    <nz-select ></nz-select>
+    <nz-select nzAllowClear [ngModel]="networkFilter()" (ngModelChange)="networkFilter.set($event)" >
+      @for (vlan of availableNetworks(); track vlan){
+        <nz-option [nzValue]="vlan" [nzLabel]="vlan"></nz-option>
+      }
+    </nz-select>
   </div>
 </div>
 <nz-table [nzData]="filterDevices()" #tableDevices class="table" >

@@ -3,14 +3,14 @@
 }
 .networkCard {
   background: #fafafa;
-  border-radius: 10px;
-  border: #a8a8a8 solid 1px;
+  border-radius: 20px;
   box-shadow: 1px 1px 5px #bfbfbf;
   display: flex;
   flex-direction: column;
   padding: 20px;
   width: 380px;
   gap: 16px;
+  margin: 5px;
 }
 
 .networkCardItem{
@@ -30,6 +30,27 @@
   border-radius: 5px;
   background: #ededed;
   padding: 0 5px;
+}
+
+.networkCardSkeleton{
+  width: 380px;
+  height: 500px;
+  border-radius: 8px;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e6e6e6 50%,
+    #f0f0f0 75%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
 }
 
 

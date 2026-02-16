@@ -1,11 +1,14 @@
 .side-bar-menu {
+  margin: 5px;
+  border-radius: 20px;
   background: #fafafa ;
   box-shadow: 1px 1px 5px #bfbfbf;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  top: 85px;
   position: fixed;
-  height: 100%;
+  height: calc(100% - 95px);
   gap: 1rem;
   z-index: 999;
 }

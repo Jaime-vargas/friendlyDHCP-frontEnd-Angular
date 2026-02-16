@@ -3,7 +3,7 @@
           (click)="handleModalVisible()">New Network</button>
 </app-top-bar>
 <div class="mainContainer">
-  <app-network-form-modal [isModalVisible]="modalVisible()" ></app-network-form-modal>
-  <app-network-modal [networks]="networks()"></app-network-modal>
+  <app-network-form-modal [isModalVisible]="modalVisible()"  ></app-network-form-modal>
+  <app-network-modal [networks]="networks()" [loading]="networkCardsLoading()"></app-network-modal>
 </div>
 

@@ -1,7 +1,9 @@
 .topBar {
+  border-radius: 20px;
+  margin: 5px;
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: calc(100% - 10px);
   height: 80px;
   background: #fafafa;
   box-shadow: 1px 1px 5px #bfbfbf;

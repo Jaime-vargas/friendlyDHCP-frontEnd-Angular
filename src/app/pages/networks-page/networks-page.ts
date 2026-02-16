@@ -1,4 +1,4 @@
-import {Component, inject, signal,} from '@angular/core';
+import {Component, inject, Output, signal,} from '@angular/core';
 import {NetworkApiService}  from '../../service/network-api.service';
 import {Network} from '../../models/Network';
 import {NetworkCards} from '../../components/network-modal/network-cards';
@@ -6,11 +6,13 @@ import {NetworkFormModal} from '../../components/network-form-modal/network-form
 import {TopBarService} from '../../components/top-bar/top-bar.service';
 import {TopBar} from '../../components/top-bar/top-bar';
 import {NzButtonComponent} from 'ng-zorro-antd/button';
+import { NzModalModule} from 'ng-zorro-antd/modal';
+import {AppModalService} from '../../service/app-modal.service';
 
 @Component({
   selector: 'app-networks-page',
   imports: [
-    NetworkCards, NetworkFormModal, TopBar, NzButtonComponent
+    NetworkCards, NetworkFormModal, TopBar, NzButtonComponent, NzModalModule,
   ],
   templateUrl: './networks-page.html',
   styleUrl: './networks-page.css',
@@ -24,15 +26,28 @@ export class NetworksPage {
   public modalVisible = signal<boolean>(false);
   public networks = signal<Network[]>([]);
 
+  public networkCardsLoading = signal<boolean>(true);
+
+  private appModalService = inject(AppModalService);
+
   constructor() {
     this.topBar.buttonName.set("New Network");
     this.getAll();
   }
 
   getAll() {
-    this.networkApiService.getAll().subscribe(networks => {
-      this.networks.set(networks);
-    })
+    this.networkCardsLoading.set(true);
+    this.networkApiService.getAll().subscribe({
+      next: (networks) => {
+        this.networks.set(networks);
+      },
+      error: (err) => {
+        this.appModalService.showError(err.message || "Error API calling getAll.");
+      },
+      complete: () => {
+        this.networkCardsLoading.set(false);
+      }
+    });
   }
 
   handleModalVisible(){
