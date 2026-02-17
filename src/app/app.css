@@ -1,10 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
 .mainframe {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: start;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  top: 90px;
+  left: 160px;
+  width: calc(100vw - 170px);
+  height: calc(100vh - 95px);
   padding: 20px;
+  margin: 5px;
+
   background: #fafafa;
+  border-radius: 20px;
+  box-shadow: -1px -1px 5px #bfbfbf;
 }

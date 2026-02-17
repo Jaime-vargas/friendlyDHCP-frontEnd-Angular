@@ -7,7 +7,7 @@ import {NzButtonComponent} from 'ng-zorro-antd/button';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @Component({
-  selector: 'app-network-modal',
+  selector: 'app-network-cards-modal',
   imports: [NzCardModule, NzTypographyModule, NzFlexDirective, NzButtonComponent,NzSkeletonModule],
   templateUrl: './network-cards.html',
   styleUrl: './network-cards.css',

@@ -1,7 +1,7 @@
 import {Component, inject, Output, signal,} from '@angular/core';
 import {NetworkApiService}  from '../../service/network-api.service';
 import {Network} from '../../models/Network';
-import {NetworkCards} from '../../components/network-modal/network-cards';
+import {NetworkCards} from '../../components/network-cards-modal/network-cards';
 import {NetworkFormModal} from '../../components/network-form-modal/network-form-modal';
 import {TopBarService} from '../../components/top-bar/top-bar.service';
 import {TopBar} from '../../components/top-bar/top-bar';
@@ -45,7 +45,7 @@ export class NetworksPage {
         this.appModalService.showError(err.message || "Error API calling getAll.");
       },
       complete: () => {
-        this.networkCardsLoading.set(false);
+        setTimeout(()=> this.networkCardsLoading.set(false), 2000);
       }
     });
   }

@@ -1,4 +1,4 @@
-import {Component, signal, input, computed} from '@angular/core';
+import {Component, signal, input, computed, output} from '@angular/core';
 import {NzTableModule} from 'ng-zorro-antd/table';
 import { NzInputModule, } from 'ng-zorro-antd/input';
 
@@ -7,17 +7,23 @@ import {NzFormLabelComponent} from 'ng-zorro-antd/form';
 import {NzOptionComponent, NzSelectComponent} from 'ng-zorro-antd/select';
 import {NzFlexDirective} from 'ng-zorro-antd/flex';
 import {FormsModule} from '@angular/forms';
+import {NzButtonComponent, NzButtonModule} from 'ng-zorro-antd/button';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {NzModalModule } from 'ng-zorro-antd/modal';
+
 
 @Component({
-  selector: 'app-devices-table',
+  selector: 'app-devices-table-modal',
   standalone: true,
   imports: [
-    NzTableModule, NzInputModule, NzFormLabelComponent, NzSelectComponent, NzFlexDirective, FormsModule, NzOptionComponent,
+    NzTableModule, NzInputModule, NzFormLabelComponent, NzSelectComponent, NzFlexDirective, FormsModule, NzOptionComponent, NzButtonComponent,NzModalModule, NzButtonModule,
   ],
   templateUrl: './devices-table.html',
   styleUrl: './devices-table.css',
 })
 export class DevicesTable {
+
+  constructor(private modal: NzModalService ) {}
 
   columns = signal([
     { key: 'name', title: 'Name' },
@@ -29,6 +35,12 @@ export class DevicesTable {
   ]);
   devices = input.required<Device[]>();
 
+  //table
+  tableLoading = input.required<boolean>();
+  delete = output<number>();
+  edit = output<Device>();
+
+  //Filter
   nameFilter = signal("");
   categoryFilter = signal("");
   macFilter = signal("");
@@ -57,6 +69,19 @@ export class DevicesTable {
     })
     }
   )
+
+  showDeleteConfirm(device: Device): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this device?',
+      nzContent: `<b style="color: red;">${device.name}</b>`,
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => this.delete.emit(device.id),
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
 
 
 }

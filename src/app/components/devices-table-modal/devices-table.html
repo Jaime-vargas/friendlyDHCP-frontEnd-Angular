@@ -1,4 +1,4 @@
-<div nz-flex  nzWrap="wrap" class="filters" nzGap="small">
+<div nz-flex  nzWrap="wrap" class="filters" nzGap="small" >
   <div class="input-search">
     <nz-form-label>Filter by name</nz-form-label>
     <nz-input-search nzAllowClear>
@@ -32,11 +32,12 @@
     </nz-select>
   </div>
 </div>
-<nz-table [nzData]="filterDevices()" #tableDevices class="table" >
+<div nz-flex  nzWrap="wrap" class="container" nzGap="small"  >
+<nz-table [nzLoading]="tableLoading()" [nzData]="filterDevices()" #tableDevices class="table" nzSize="small" [nzScroll]="{y: '550px'}" >
 <thead nzThead>
 <tr nzTr>
   @for (col of columns(); track col.key) {
-    <th class="header"><strong>{{ col.title }}</strong></th>
+    <th nzWidth="150px" class="header"><strong>{{ col.title }}</strong></th>
   }
 </tr>
 </thead>
@@ -48,7 +49,12 @@
         <td>{{data.mac_address}}</td>
         <td>{{data.ip_address}}</td>
         <td>{{data.network_name}}</td>
+        <td>
+          <button class="button" nz-button nzType="primary" nzShape="round">Edit</button>
+          <button class="button" nz-button nzDanger nzType="primary" nzShape="round" (click)="showDeleteConfirm(data)">Delete</button>
+        </td>
       </tr>
     }
   </tbody>
 </nz-table>
+</div>

@@ -1,4 +1,7 @@
-<app-top-bar></app-top-bar>
+<app-top-bar>
+  <button nz-button nzType="primary" nzShape="round">New Device</button>
+</app-top-bar>
 <div class="mainContainer">
-<app-devices-table [devices]="devices()"></app-devices-table>
+
+<app-devices-table [tableLoading]="tableLoading()" [devices]="devices()"  (delete)="deleteDevice($event)"></app-devices-table>
 </div>

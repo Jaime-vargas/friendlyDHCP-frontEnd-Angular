@@ -1,12 +1,18 @@
-.mainContainer{
-  margin-bottom: 40px;
-  margin-left: 150px;
-  height:calc(100dvh - 80px);
+.mainContent{
+  display: flex;
+  flex-direction: column;
+
+  justify-content:flex-start;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  overflow: auto;
 }
+
 .project-description{
   background: #fff;
   padding:10px;
-  box-shadow: 1px 1px 10px #bfbfbf;
+  box-shadow: 1px 1px 5px #bfbfbf;
 }
 .project-description p{
   color:#2d2f2e;
@@ -22,6 +28,7 @@
   padding: 20px;
   width: 400px;
   gap: 20px;
+  margin: 5px;
 }
 .card p,.card h4, h1{
   margin: 0;

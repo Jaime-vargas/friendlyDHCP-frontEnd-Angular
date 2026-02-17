@@ -1,0 +1,29 @@
+.filters{
+  margin-bottom: 2rem;
+  width: 100%;
+}
+.table {
+  min-width:500px;
+  max-width: 1000px;
+}
+.table > thead > tr > th {
+  width: 150px;
+}
+.table > tbody > tr > td {
+  background: #2d2f2e;
+}
+.header{
+  background: #e6f7ff;
+  color: #004aad;
+}
+.button{
+  margin: 2px 2px;
+  width: 70px;
+}
+.input-search{
+  width: 180px;
+}
+.container{
+  width: 100%;
+  flex: 1;
+}

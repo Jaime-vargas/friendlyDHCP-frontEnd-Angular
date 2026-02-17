@@ -1,11 +1,12 @@
 .topBar {
-  border-radius: 20px;
+
   margin: 5px;
   display: flex;
   flex-direction: row;
   width: calc(100% - 10px);
   height: 80px;
   background: #fafafa;
+  border-radius: 20px;
   box-shadow: 1px 1px 5px #bfbfbf;
   padding: 0 20px;
   position: fixed;
