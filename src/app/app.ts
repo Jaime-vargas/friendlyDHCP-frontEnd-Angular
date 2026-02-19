@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {SideBarMenu} from './components/side-bar-menu/side-bar-menu';
+import {SideBarMenu} from './components/side-bar-menu-component/side-bar-menu';
 import {RouterOutlet} from '@angular/router';
 
 

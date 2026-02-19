@@ -1,10 +1,10 @@
 import {Component, inject, Output, signal,} from '@angular/core';
 import {NetworkApiService}  from '../../service/network-api.service';
 import {Network} from '../../models/Network';
-import {NetworkCards} from '../../components/network-cards-modal/network-cards';
-import {NetworkFormModal} from '../../components/network-form-modal/network-form-modal';
-import {TopBarService} from '../../components/top-bar/top-bar.service';
-import {TopBar} from '../../components/top-bar/top-bar';
+import {NetworkCards} from '../../components/network-cards-component/network-cards';
+import {NetworkFormModal} from '../../components/network-form-modal-component/network-form-modal';
+import {TopBarService} from '../../components/top-bar-component/top-bar.service';
+import {TopBar} from '../../components/top-bar-component/top-bar';
 import {NzButtonComponent} from 'ng-zorro-antd/button';
 import { NzModalModule} from 'ng-zorro-antd/modal';
 import {AppModalService} from '../../service/app-modal.service';
@@ -45,7 +45,7 @@ export class NetworksPage {
         this.appModalService.showError(err.message || "Error API calling getAll.");
       },
       complete: () => {
-        setTimeout(()=> this.networkCardsLoading.set(false), 2000);
+        setTimeout(()=> this.networkCardsLoading.set(false), 300);
       }
     });
   }

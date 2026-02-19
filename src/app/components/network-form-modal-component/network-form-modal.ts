@@ -9,7 +9,7 @@ import {NzButtonComponent} from 'ng-zorro-antd/button';
 import {NzMenuModule} from 'ng-zorro-antd/menu';
 
 @Component({
-  selector: 'app-network-form-modal',
+  selector: 'app-network-form-modal-component',
   imports: [
     NzModalModule,
     NzFormDirective,

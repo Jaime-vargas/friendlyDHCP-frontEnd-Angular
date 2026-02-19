@@ -5,7 +5,7 @@ import {NzTypographyComponent} from 'ng-zorro-antd/typography';
 import {TopBarService} from './top-bar.service';
 
 @Component({
-  selector: 'app-top-bar',
+  selector: 'app-top-bar-component',
   imports: [
     NzFlexDirective,
     NzTypographyComponent

@@ -4,7 +4,7 @@ import {NzFlexDirective} from 'ng-zorro-antd/flex';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
-  selector: 'app-side-bar-menu',
+  selector: 'app-side-bar-menu-component',
   imports: [
     NzMenuDirective,
     NzMenuItemComponent,

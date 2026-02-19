@@ -13,7 +13,7 @@ import {NzModalModule } from 'ng-zorro-antd/modal';
 
 
 @Component({
-  selector: 'app-devices-table-modal',
+  selector: 'app-devices-table-component',
   standalone: true,
   imports: [
     NzTableModule, NzInputModule, NzFormLabelComponent, NzSelectComponent, NzFlexDirective, FormsModule, NzOptionComponent, NzButtonComponent,NzModalModule, NzButtonModule,

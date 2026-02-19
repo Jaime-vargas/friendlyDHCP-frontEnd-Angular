@@ -1,0 +1,76 @@
+<nz-modal [nzVisible]="modalVisible()"
+          [nzWidth]="400"
+          [nzFooter]="null"
+          (nzOnCancel)="modalReset()">
+
+<ng-template nzModalContent>
+  <h2 nz-typography>title</h2>
+  <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div nz-flex nzGap="small">
+      <nz-form-item>
+        <nz-form-label>Name</nz-form-label>
+        <nz-form-control [nzErrorTip]="'name is required'" [nzValidateStatus]="form.controls.name">
+          <input nz-input formControlName="name" id="name" placeholder="name" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-flex nzGap="small">
+      <nz-form-item>
+        <nz-form-label>Category</nz-form-label>
+        <nz-form-control [nzErrorTip]="'category is required'" [nzValidateStatus]="form.controls.category">
+          <input nz-input formControlName="category" id="category" placeholder="category" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-flex nzGap="small">
+      <nz-form-item>
+        <nz-form-label>MAC address</nz-form-label>
+        <nz-form-control [nzErrorTip]="macErrorTpl" [nzValidateStatus]="form.controls.mac_address">
+          <input nz-input formControlName="mac_address" id="mac_address" placeholder="mac_address" />
+        </nz-form-control>
+        <ng-template #macErrorTpl let-control>
+          @if (control.hasError('required')) {
+            MAC address is required
+          }
+          @else if (control.hasError('pattern')) {
+            Invalid MAC format (example: AA:BB:CC:DD:EE:FF)
+          }
+        </ng-template>
+      </nz-form-item>
+    </div>
+    <div nz-flex nzGap="small">
+      <nz-form-item>
+        <nz-form-label>IP address</nz-form-label>
+        <nz-form-control [nzErrorTip]="ipErrorTpl" [nzValidateStatus]="form.controls.ip_address">
+          <input nz-input formControlName="ip_address" id="ip_address" placeholder="ip_address" />
+        </nz-form-control>
+        <ng-template #ipErrorTpl let-control>
+          @if (control.hasError('required')) {
+            IP address is required
+          }
+          @else if (control.hasError('pattern')) {
+            Invalid MAC format (example: 192.168.0.90)
+          }
+        </ng-template>
+      </nz-form-item>
+    </div>
+    <div nz-flex nzGap="small">
+      <nz-form-item>
+        <nz-form-label>Network</nz-form-label>
+        <nz-form-control nzErrorTip="network is required" [nzValidateStatus]="form.controls.network_id">
+          <nz-select nzAllowClear formControlName="network_id" nzPlaceHolder="Select network">
+            @for (network of listOfNetworks(); track network.id){
+              <nz-option [nzValue]="network.id" [nzLabel]="network.name"></nz-option>
+            }
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-flex nzGap="small" nzJustify="flex-end">
+      <button nz-button  nzType="primary" nzShape="round" type="submit" [disabled]="form.invalid || form.pristine" >Save</button>
+      <button nz-button nzDanger nzType="primary" nzShape="round" (click)="modalClose.emit()">Cancel</button>
+    </div>
+  </form>
+</ng-template>
+</nz-modal>

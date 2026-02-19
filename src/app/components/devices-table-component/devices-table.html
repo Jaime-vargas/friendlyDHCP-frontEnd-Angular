@@ -1,4 +1,4 @@
-<div nz-flex  nzWrap="wrap" class="filters" nzGap="small" >
+<div nz-flex  nzWrap="wrap" class="filters" nzGap="small" nzJustify="space-around">
   <div class="input-search">
     <nz-form-label>Filter by name</nz-form-label>
     <nz-input-search nzAllowClear>
@@ -17,44 +17,45 @@
       <input nz-input placeholder="Filter by MAC address" [ngModel]="macFilter()" (ngModelChange)="macFilter.set($event)">
     </nz-input-search>
   </div>
-  <div class="input-search">
+  <div class="input-search" >
     <nz-form-label>Filter by IP address</nz-form-label>
     <nz-input-search nzAllowClear >
       <input nz-input placeholder="Filter by IP address" [ngModel]="ipFilter()" (ngModelChange)="ipFilter.set($event)">
     </nz-input-search>
   </div>
-  <div nz-flex nzVertical class="input-search">
+  <div nz-flex nzVertical class="input-search" nzAlign="start">
     <nz-form-label>Filter by network</nz-form-label>
-    <nz-select nzAllowClear [ngModel]="networkFilter()" (ngModelChange)="networkFilter.set($event)" >
+    <nz-select class="input-search" nzAllowClear [ngModel]="networkFilter()" (ngModelChange)="networkFilter.set($event)" >
       @for (vlan of availableNetworks(); track vlan){
         <nz-option [nzValue]="vlan" [nzLabel]="vlan"></nz-option>
       }
     </nz-select>
   </div>
 </div>
-<div nz-flex  nzWrap="wrap" class="container" nzGap="small"  >
-<nz-table [nzLoading]="tableLoading()" [nzData]="filterDevices()" #tableDevices class="table" nzSize="small" [nzScroll]="{y: '550px'}" >
+<div class="containerTable" >
+<nz-table ngSkipHydration [nzLoading]="tableLoading()"  [nzData]="filterDevices()" #tableDevices class="table" nzSize="small"  >
 <thead nzThead>
 <tr nzTr>
   @for (col of columns(); track col.key) {
-    <th nzWidth="150px" class="header"><strong>{{ col.title }}</strong></th>
+    <th class="header"><strong>{{ col.title }}</strong></th>
   }
 </tr>
 </thead>
   <tbody>
-    @for (data of tableDevices.data; track data){
+    @for (device of tableDevices.data; track device){
       <tr>
-        <td>{{data.name}}</td>
-        <td>{{data.category}}</td>
-        <td>{{data.mac_address}}</td>
-        <td>{{data.ip_address}}</td>
-        <td>{{data.network_name}}</td>
-        <td>
+        <td>{{device.name}}</td>
+        <td>{{device.category}}</td>
+        <td>{{device.mac_address}}</td>
+        <td>{{device.ip_address}}</td>
+        <td>{{device.network_name}}</td>
+        <td class="actions">
           <button class="button" nz-button nzType="primary" nzShape="round">Edit</button>
-          <button class="button" nz-button nzDanger nzType="primary" nzShape="round" (click)="showDeleteConfirm(data)">Delete</button>
+          <button class="button" nz-button nzDanger nzType="primary" nzShape="round" (click)="showDeleteConfirm(device)">Delete</button>
         </td>
       </tr>
     }
   </tbody>
 </nz-table>
 </div>
+

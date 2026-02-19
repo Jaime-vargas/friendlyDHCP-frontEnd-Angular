@@ -1,7 +1,7 @@
-<app-top-bar>
-  <button nz-button nzType="primary" nzShape="round">New Device</button>
-</app-top-bar>
+<app-top-bar-component>
+  <button nz-button nzType="primary" nzShape="round" (click)="modalOpen()">New Device</button>
+</app-top-bar-component>
 <div class="mainContainer">
-
-<app-devices-table [tableLoading]="tableLoading()" [devices]="devices()"  (delete)="deleteDevice($event)"></app-devices-table>
+<app-devices-form-modal-component [listOfNetworks]="listOfNetworks()"  [modalVisible]="modalVisible()" (modalClose)="modalClose()" (submitSave)="saveDevice($event)"></app-devices-form-modal-component>
+<app-devices-table-component [tableLoading]="tableLoading()" [devices]="devices()"  (delete)="deleteDevice($event)"></app-devices-table-component>
 </div>

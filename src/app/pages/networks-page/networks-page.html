@@ -1,9 +1,9 @@
-<app-top-bar>
+<app-top-bar-component>
   <button nz-button nzType="primary" nzShape="round"
           (click)="handleModalVisible()">New Network</button>
-</app-top-bar>
-<div class="mainContent">
-  <app-network-form-modal [isModalVisible]="modalVisible()"  ></app-network-form-modal>
-  <app-network-modal [networks]="networks()" [loading]="networkCardsLoading()"></app-network-modal>
+</app-top-bar-component>
+<div class="mainFrame">
+  <app-network-form-modal-component [isModalVisible]="modalVisible()"  ></app-network-form-modal-component>
+  <app-network-cards-component [networks]="networks()" [loading]="networkCardsLoading()"></app-network-cards-component>
 </div>
 

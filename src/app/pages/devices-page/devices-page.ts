@@ -1,24 +1,30 @@
 import {Component, inject, signal} from '@angular/core';
-import {TopBar} from '../../components/top-bar/top-bar';
-import {DevicesTable} from '../../components/devices-table-modal/devices-table';
+import {TopBar} from '../../components/top-bar-component/top-bar';
+import {DevicesTable} from '../../components/devices-table-component/devices-table';
 
 import {DeviceApiService} from '../../service/device-api.service';
 import {Device} from '../../models/Device';
 import {NzButtonComponent} from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import {DevicesFormModalComponent} from '../../components/devices-form-modal-component/devices-form-modal-component';
+import {DeviceCreateDto} from '../../models/DeviceCreateDto';
+import {NetworkApiService} from '../../service/network-api.service';
+import {AppModalService} from '../../service/app-modal.service';
 
 @Component({
   selector: 'app-devices-page',
   imports: [
     TopBar,
     DevicesTable,
-    NzButtonComponent
+    NzButtonComponent,
+    DevicesFormModalComponent
   ],
   templateUrl: './devices-page.html',
   styleUrl: './devices-page.css',
 })
 export class DevicesPage {
 
+  private networkApiService: NetworkApiService = inject(NetworkApiService);
   private deviceApiService: DeviceApiService = inject(DeviceApiService);
   private _devices = signal<Device[]>([]);
 
@@ -26,16 +32,38 @@ export class DevicesPage {
     this.getAllDevices();
   }
 
+  // ERROR MODAL SERVICE
+  private appModalService = inject(AppModalService);
+
   // Table
   public tableLoading = signal<boolean>(false);
   public devices = this._devices.asReadonly();
 
   // Modal
-  modalVisible = signal<boolean>(false);
+  public modalVisible = signal<boolean>(false);
+  modalOpen(): void {
+    this.loadNetworks();
+    this.modalVisible.set(true);
+  }
+  modalClose (){
+    this.modalVisible.set(false);
+  }
+      //networks for modal
+  public _listOfNetworks = signal<{id: number, name: string}[]>([]);
+  public listOfNetworks = this._listOfNetworks.asReadonly();
+  public loadNetworks(): void {
+    this.networkApiService.getAll().subscribe({
+      next: (networks) => {
+        this._listOfNetworks.set(networks.map(n => {
+          return {id: n.id, name: n.name};
+        }))
+      }
+    })
+  }
 
   // Notifications
-  createBasicMessage(): void {
-    this.message.success('Deleted successfully.', {
+  createBasicMessage(message: string): void {
+    this.message.success(message, {
       nzDuration: 3000
     });
   }
@@ -48,12 +76,27 @@ export class DevicesPage {
       next: data => {
         this._devices.set(data);
       },error:(err) => {
-        console.log(err);
+        this.appModalService.showError(err.message);
       },
       complete: () => {
-        setTimeout(() => this.tableLoading.set(false),2000);
+        setTimeout(() => this.tableLoading.set(false),100);
       }
     });
+  }
+
+  saveDevice(deviceDTO: DeviceCreateDto) {
+      this.deviceApiService.create(deviceDTO).subscribe({
+        next: device => {
+          this._devices.update(current => [...current, device]);
+        },
+        error: err => {
+          this.appModalService.showError(err.message);
+        },
+        complete: () => {
+          this.createBasicMessage('Saved successfully.');
+          this.modalClose();
+        }
+      })
   }
 
   deleteDevice(id: number) {
@@ -63,13 +106,11 @@ export class DevicesPage {
         this.getAllDevices()
       },
       error: (err) => {
-        console.log(err);
+        this.appModalService.showError(err.message);
       },
       complete: () => {
-        this.createBasicMessage();
+        this.createBasicMessage('Deleted successfully.');
       }
     })
   }
-
-
 }

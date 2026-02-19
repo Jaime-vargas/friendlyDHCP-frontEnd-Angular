@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {NzButtonComponent} from 'ng-zorro-antd/button';
-import {TopBar} from '../../components/top-bar/top-bar';
+import {TopBar} from '../../components/top-bar-component/top-bar';
 import {NzFlexDirective} from 'ng-zorro-antd/flex';
 import {NzTypographyComponent} from 'ng-zorro-antd/typography';
 import {NzIconDirective} from 'ng-zorro-antd/icon';
