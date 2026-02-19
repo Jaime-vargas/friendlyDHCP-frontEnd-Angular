@@ -1,4 +1,4 @@
-import {Component, inject, input, output, signal} from '@angular/core';
+import {Component, effect, inject, input, output, signal} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NzModalModule} from 'ng-zorro-antd/modal';
 import {NzTypographyComponent} from 'ng-zorro-antd/typography';
@@ -30,6 +30,13 @@ import {NzOptionComponent, NzSelectComponent} from 'ng-zorro-antd/select';
 })
 export class DevicesFormModalComponent {
 
+  constructor() {
+    effect(() => {
+      this.modalVisible();
+      this.modalReset();
+    });
+  }
+
   // FORM
   private deviceForm = inject(FormBuilder);
   form = this.deviceForm.nonNullable.group({
@@ -51,11 +58,14 @@ export class DevicesFormModalComponent {
   modalVisible = input<boolean>();
   modalClose = output();
   modalReset(){
-    this.form.reset();
-    this.form.markAsPristine();
-    this.form.markAsUntouched();
-    this.modalClose.emit();
+    if(!this.modalVisible()){
+      this.form.reset();
+      this.form.markAsPristine();
+      this.form.markAsUntouched();
+      this.modalClose.emit();
+    }
   }
+
   listOfNetworks = input<{id: number, name: string}[]>([]);
 
 }

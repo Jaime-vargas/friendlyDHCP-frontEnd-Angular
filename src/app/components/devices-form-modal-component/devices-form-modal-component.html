@@ -1,7 +1,8 @@
-<nz-modal [nzVisible]="modalVisible()"
+<nz-modal ngSkipHydration
+          [nzVisible]="modalVisible()"
           [nzWidth]="400"
           [nzFooter]="null"
-          (nzOnCancel)="modalReset()">
+          (nzOnCancel)="modalClose.emit()">
 
 <ng-template nzModalContent>
   <h2 nz-typography>title</h2>
@@ -69,7 +70,7 @@
 
     <div nz-flex nzGap="small" nzJustify="flex-end">
       <button nz-button  nzType="primary" nzShape="round" type="submit" [disabled]="form.invalid || form.pristine" >Save</button>
-      <button nz-button nzDanger nzType="primary" nzShape="round" (click)="modalClose.emit()">Cancel</button>
+      <button nz-button nzDanger nzType="primary" nzShape="round" type="button" (click)="modalClose.emit()">Cancel</button>
     </div>
   </form>
 </ng-template>
