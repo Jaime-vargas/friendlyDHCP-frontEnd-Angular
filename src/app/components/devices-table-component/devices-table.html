@@ -37,7 +37,7 @@
 <thead nzThead>
 <tr nzTr>
   @for (col of columns(); track col.key) {
-    <th class="header"><strong>{{ col.title }}</strong></th>
+    <th class="header" [nzSortFn]="col.compare" [nzSortOrder]="col.key === 'name' ? 'ascend' : null" [nzSortPriority]="col.priority"><strong>{{ col.title }}</strong></th>
   }
 </tr>
 </thead>
@@ -50,7 +50,7 @@
         <td>{{device.ip_address}}</td>
         <td>{{device.network_name}}</td>
         <td class="actions">
-          <button class="button" nz-button nzType="primary" nzShape="round">Edit</button>
+          <button class="button" nz-button nzType="primary" nzShape="round" (click)="edit.emit(device)">Edit</button>
           <button class="button" nz-button nzDanger nzType="primary" nzShape="round" (click)="showDeleteConfirm(device)">Delete</button>
         </td>
       </tr>

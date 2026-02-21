@@ -7,6 +7,7 @@ import {NzFlexDirective} from 'ng-zorro-antd/flex';
 import {NzInputDirective} from 'ng-zorro-antd/input';
 import {NzButtonComponent} from 'ng-zorro-antd/button';
 import {NzOptionComponent, NzSelectComponent} from 'ng-zorro-antd/select';
+import {Device} from '../../models/Device';
 
 @Component({
   selector: 'app-devices-form-modal-component',
@@ -34,6 +35,10 @@ export class DevicesFormModalComponent {
     effect(() => {
       this.modalVisible();
       this.modalReset();
+    });
+    effect(() => {
+      this.deviceEditing();
+      this.setDeviceDataToForm();
     });
   }
 
@@ -67,5 +72,16 @@ export class DevicesFormModalComponent {
   }
 
   listOfNetworks = input<{id: number, name: string}[]>([]);
+  deviceToEdit= input<Device|null>();
+  deviceEditing = input<boolean>();
+  setDeviceDataToForm(){
+    this.form.patchValue({
+      name: this.deviceToEdit()?.name,
+      category: this.deviceToEdit()?.category,
+      mac_address: this.deviceToEdit()?.mac_address,
+      ip_address: this.deviceToEdit()?.ip_address,
+      network_id: this.deviceToEdit()?.network_name.toString()
+    });
+  }
 
 }

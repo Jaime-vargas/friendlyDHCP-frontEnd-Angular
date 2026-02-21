@@ -26,12 +26,12 @@ export class DevicesTable {
   constructor(private modal: NzModalService ) {}
 
   columns = signal([
-    { key: 'name', title: 'Name' },
-    { key: 'category', title: 'Category' },
-    { key: 'mac_address', title: 'MAC Address' },
-    { key: 'ip_address', title: 'IP Address' },
-    { key: 'network_name', title: 'Network' },
-    { key: 'action', title: 'Actions' },
+    { key: 'name', title: 'Name', compare: (a: Device, b: Device) => a.name.localeCompare(b.name), priority: 1 },
+    { key: 'category', title: 'Category', compare: false, priority: false },
+    { key: 'mac_address', title: 'MAC Address', compare: false, priority: false },
+    { key: 'ip_address', title: 'IP Address', compare: false, priority: false },
+    { key: 'network_name', title: 'Network', compare: false, priority: false },
+    { key: 'action', title: 'Actions', compare: false, priority: false },
   ]);
   devices = input.required<Device[]>();
 

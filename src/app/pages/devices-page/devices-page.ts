@@ -48,6 +48,13 @@ export class DevicesPage {
   modalClose (){
     this.modalVisible.set(false);
   }
+  deviceEditing = signal<boolean>(false);
+  deviceToEdit = signal<Device | null>(null);
+  modalOpenToEdit (device: Device) {
+    this.deviceToEdit.set(device);
+    this.deviceEditing.set(true);
+    this.modalOpen();
+  }
       //networks for modal
   public _listOfNetworks = signal<{id: number, name: string}[]>([]);
   public listOfNetworks = this._listOfNetworks.asReadonly();
@@ -113,4 +120,6 @@ export class DevicesPage {
       }
     })
   }
+
+
 }
