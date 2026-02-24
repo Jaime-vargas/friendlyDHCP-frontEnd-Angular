@@ -1,26 +1,21 @@
-import {computed, Injectable} from '@angular/core';
+import { Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApiURLBaseService} from './api-url-base.service';
 import {catchError, Observable, throwError} from 'rxjs';
 import {Network} from '../models/Network';
 import {NetworkCreateDto} from '../models/NetworkCreateDto';
 
+
 @Injectable({ providedIn: 'root' })
 export class NetworkApiService extends ApiURLBaseService {
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient,) {
     super(http);
   }
 
   getAll(): Observable<Network[]> {
     return this.http
       .get<Network[]>(`${this.baseUrl}/networks`)
-      .pipe(catchError(this.handleError));
-  }
-
-  getById(id: number): Observable<Network> {
-    return this.http
-      .get<Network>(`${this.baseUrl}/networks/${id}`)
       .pipe(catchError(this.handleError));
   }
 

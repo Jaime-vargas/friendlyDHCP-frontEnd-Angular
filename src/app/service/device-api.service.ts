@@ -8,7 +8,7 @@ import {DeviceCreateDto} from '../models/DeviceCreateDto';
 @Injectable({ providedIn: 'root' })
 export class DeviceApiService extends ApiURLBaseService {
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient,) {
     super(http);
   }
 

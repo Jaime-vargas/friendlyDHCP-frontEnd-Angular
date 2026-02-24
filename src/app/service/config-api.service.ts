@@ -2,14 +2,13 @@ import {computed, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApiURLBaseService} from './api-url-base.service';
 import {catchError, Observable, throwError} from 'rxjs';
-import {Network} from '../models/Network';
-import {NetworkCreateDto} from '../models/NetworkCreateDto';
 import {Settings} from '../models/settings';
+
 
 @Injectable({ providedIn: 'root' })
 export class ConfigApiService extends ApiURLBaseService {
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient,) {
     super(http);
   }
 
