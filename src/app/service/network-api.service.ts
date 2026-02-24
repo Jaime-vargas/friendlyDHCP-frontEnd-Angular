@@ -24,13 +24,13 @@ export class NetworkApiService extends ApiURLBaseService {
       .pipe(catchError(this.handleError));
   }
 
-  create(dto: NetworkCreateDto): Observable<Network> {
+  save(dto: NetworkCreateDto): Observable<Network> {
     return this.http
       .post<Network>(`${this.baseUrl}/networks`, dto)
       .pipe(catchError(this.handleError));
   }
 
-  edit(id: number, dto: NetworkCreateDto): Observable<Network> {
+  update(id: number, dto: NetworkCreateDto): Observable<Network> {
     return this.http.put<Network>(`${this.baseUrl}/networks/${id}`, dto)
       .pipe(catchError(this.handleError));
   }

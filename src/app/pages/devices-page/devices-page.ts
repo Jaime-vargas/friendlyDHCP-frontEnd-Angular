@@ -47,15 +47,16 @@ export class DevicesPage {
   }
   modalClose (){
     this.modalVisible.set(false);
+    this.deviceToEdit.set(null);
   }
-  deviceEditing = signal<boolean>(false);
+
   deviceToEdit = signal<Device | null>(null);
+
   modalOpenToEdit (device: Device) {
     this.deviceToEdit.set(device);
-    this.deviceEditing.set(true);
     this.modalOpen();
   }
-      //networks for modal
+  //networks for modal
   public _listOfNetworks = signal<{id: number, name: string}[]>([]);
   public listOfNetworks = this._listOfNetworks.asReadonly();
   public loadNetworks(): void {
@@ -69,7 +70,7 @@ export class DevicesPage {
   }
 
   // Notifications
-  createBasicMessage(message: string): void {
+  createSuccessMessage(message: string): void {
     this.message.success(message, {
       nzDuration: 3000
     });
@@ -83,7 +84,7 @@ export class DevicesPage {
       next: data => {
         this._devices.set(data);
       },error:(err) => {
-        this.appModalService.showError(err.message);
+        this.appModalService.showError(err.message || "Error API on get all devices");
       },
       complete: () => {
         setTimeout(() => this.tableLoading.set(false),100);
@@ -97,13 +98,38 @@ export class DevicesPage {
           this._devices.update(current => [...current, device]);
         },
         error: err => {
-          this.appModalService.showError(err.message);
+          this.appModalService.showError(err.message || "Error API on saving device.");
         },
         complete: () => {
-          this.createBasicMessage('Saved successfully.');
+          this.createSuccessMessage('Saved successfully.');
           this.modalClose();
         }
       })
+  }
+
+  updateDevice(deviceDTO: DeviceCreateDto) {
+
+    const device = this.deviceToEdit();
+    if (!device) return;
+
+    this.deviceApiService.update(device.id, deviceDTO).subscribe({
+      next: updatedDevice => {
+
+        this._devices.update(current =>
+          current.map(d =>
+            d.id === updatedDevice.id ? updatedDevice : d
+          )
+        );
+
+      },
+      error: err => {
+        this.appModalService.showError(err.message);
+      },
+      complete: () => {
+        this.createSuccessMessage('Updated successfully.');
+        this.modalClose();
+      }
+    });
   }
 
   deleteDevice(id: number) {
@@ -116,10 +142,8 @@ export class DevicesPage {
         this.appModalService.showError(err.message);
       },
       complete: () => {
-        this.createBasicMessage('Deleted successfully.');
+        this.createSuccessMessage('Deleted successfully.');
       }
     })
   }
-
-
 }

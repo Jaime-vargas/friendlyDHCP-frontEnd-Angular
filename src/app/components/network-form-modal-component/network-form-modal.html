@@ -1,72 +1,148 @@
-<nz-modal [nzVisible]="isModalVisible()"
-          [nzContent]="content"
+<nz-modal [nzVisible]="modalVisible()"
           [nzWidth]="400"
+          (nzOnCancel)="modalClose.emit()"
           [nzFooter]="null" >
+
+  <ng-template nzModalContent>
+    <h2 nz-typography>{{ modalTitle() }}</h2>
+    <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div nz-flex nzGap="small">
+      <nz-form-item>
+        <nz-form-label>Name</nz-form-label>
+        <nz-form-control [nzErrorTip]="'name is required'" [nzValidateStatus]="form.controls.name">
+          <input nz-input formControlName="name" id="name" placeholder="name" />
+        </nz-form-control>
+      </nz-form-item>
+      </div>
+
+      <div nz-flex nzGap="middle">
+        <nz-form-item>
+          <nz-form-label>Subnet</nz-form-label>
+          <nz-form-control [nzErrorTip]="subnetTpl" [nzValidateStatus]="form.controls.subnet">
+            <input nz-input formControlName="subnet" id="subnet" placeholder="subnet" />
+          </nz-form-control>
+          <ng-template #subnetTpl let-control>
+            @if (control.hasError('required')) {
+              Subnet is required
+            }
+            @else if (control.hasError('pattern')) {
+              Invalid subnet format (example: 10.0.0.1)
+            }
+          </ng-template>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>Netmask</nz-form-label>
+          <nz-form-control [nzErrorTip]="netMaskTpl" [nzValidateStatus]="form.controls.netmask">
+            <input nz-input formControlName="netmask" id="netmask" placeholder="netmask" />
+          </nz-form-control>
+          <ng-template #netMaskTpl let-control>
+            @if (control.hasError('required')) {
+              Netmask is required
+            }
+            @else if (control.hasError('pattern')) {
+              Invalid netmask format (example: 255.255.255.0)
+            }
+          </ng-template>
+        </nz-form-item>
+      </div>
+      <div nz-flex nzGap="middle">
+        <nz-form-item>
+          <nz-form-label>Start range</nz-form-label>
+          <nz-form-control [nzErrorTip]="startRangeTpl" [nzValidateStatus]="form.controls.start_range">
+            <input nz-input formControlName="start_range" id="start_range" placeholder="start_range" />
+          </nz-form-control>
+          <ng-template #startRangeTpl let-control>
+          @if (control.hasError('required')) {
+            Start range is required
+          }
+          @else if (control.hasError('pattern')) {
+            Invalid start range format (example: 10.0.0.100)
+          }
+  </ng-template>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>End range</nz-form-label>
+          <nz-form-control [nzErrorTip]="endRangeTpl" [nzValidateStatus]="form.controls.end_range">
+            <input nz-input formControlName="end_range" id="end_range" placeholder="end_range" />
+          </nz-form-control>
+          <ng-template #endRangeTpl let-control>
+            @if (control.hasError('required')) {
+              End range is required
+            }
+            @else if (control.hasError('pattern')) {
+              Invalid end range format (example: 10.0.0.200)
+            }
+          </ng-template>
+        </nz-form-item>
+      </div>
+
+
+      <div nz-flex nzGap="small">
+        <nz-form-item>
+          <nz-form-label>Default lease time</nz-form-label>
+          <nz-form-control [nzErrorTip]="'Default lease time is required'" [nzValidateStatus]="form.controls.default_lease_time">
+            <input nz-input formControlName="default_lease_time" id="default_lease_time" placeholder="default_lease_time" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Max lease time</nz-form-label>
+          <nz-form-control [nzErrorTip]="'Max lease time is required'" [nzValidateStatus]="form.controls.max_lease_time">
+            <input nz-input formControlName="max_lease_time" id="max_lease_time" placeholder="max_lease_time" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-flex nzGap="small">
+        <nz-form-item>
+          <nz-form-label>Router</nz-form-label>
+          <nz-form-control [nzErrorTip]="routerTpl" [nzValidateStatus]="form.controls.router">
+            <input nz-input formControlName="router" id="router" placeholder="router" />
+          </nz-form-control>
+          <ng-template #routerTpl let-control>
+            @if (control.hasError('required')) {
+              Router is required
+            }
+            @else if (control.hasError('pattern')) {
+              Invalid router format (example: 10.0.0.1)
+            }
+          </ng-template>
+        </nz-form-item>
+      </div>
+      <div nz-flex nzGap="small">
+        <nz-form-item>
+          <nz-form-label>Primary DNS</nz-form-label>
+          <nz-form-control [nzErrorTip]="primaryDnsTpl" [nzValidateStatus]="form.controls.primary_dns">
+            <input nz-input formControlName="primary_dns" id="primary_dns" placeholder="primary_dns" />
+          </nz-form-control>
+          <ng-template #primaryDnsTpl let-control>
+            @if (control.hasError('required')) {
+              Primary DNS is required
+            }
+            @else if (control.hasError('pattern')) {
+              Invalid primary DNS format (example: 8.8.8.8)
+            }
+          </ng-template>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Secondary DNS</nz-form-label>
+          <nz-form-control [nzErrorTip]="secondaryDnsTpl" [nzValidateStatus]="form.controls.secondary_dns">
+            <input nz-input formControlName="secondary_dns" id="secondary_dns" placeholder="secondary_dns" />
+          </nz-form-control>
+          <ng-template #secondaryDnsTpl let-control>
+            @if (control.hasError('required')) {
+              Secondary DNS is required
+            }
+            @else if (control.hasError('pattern')) {
+              Invalid secondary DNS format (example: 8.8.4.4)
+            }
+          </ng-template>
+        </nz-form-item>
+      </div>
+      <div nz-flex nzGap="small" nzJustify="flex-end">
+        <button nz-button nzType="primary" nzShape="round" type="submit" [disabled]="form.invalid || form.pristine">Save</button>
+        <button nz-button nzDanger nzType="primary" nzShape="round" type="button" (click)="modalClose.emit()">Cancel</button>
+      </div>
+    </form>
+  </ng-template>
 </nz-modal>
-<ng-template #content>
-  <h2 nz-typography>title</h2>
-  <form nz-form [formGroup]="form" >
-    <div nz-flex nzGap="small">
-    <nz-form-item>
-      <nz-form-label>Name</nz-form-label>
-      <nz-form-control>
-        <input nz-input formControlName="name" id="name" placeholder="name" />
-      </nz-form-control>
-    </nz-form-item>
-    </div>
-    <div nz-flex nzGap="middle">
-      <nz-form-item>
-        <nz-form-label>Subnet</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="subnet" id="subnet" placeholder="subnet" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Start range</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="start_range" id="start_range" placeholder="start_range" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-flex nzGap="small">
-      <nz-form-item>
-        <nz-form-label>Default lease time</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="default_lease_time" id="default_lease_time" placeholder="default_lease_time" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Max lease time</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="max_lease_time" id="max_lease_time" placeholder="max_lease_time" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-flex nzGap="small">
-      <nz-form-item>
-        <nz-form-label>Router</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="router" id="router" placeholder="router" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-flex nzGap="small">
-      <nz-form-item>
-        <nz-form-label>Primary DNS</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="primary_dns" id="primary_dns" placeholder="primary_dns" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Secondary DNS</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="secondary_dns" id="secondary_dns" placeholder="secondary_dns" />
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-    <div nz-flex nzGap="small" nzJustify="flex-end">
-      <button nz-button nzType="primary" nzShape="round" type="submit">Save</button>
-      <button nz-button nzDanger nzType="primary" nzShape="round">Cancel</button>
-    </div>
-  </form>
-</ng-template>

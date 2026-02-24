@@ -1,0 +1,63 @@
+<app-top-bar-component></app-top-bar-component>
+<div class="mainContent">
+  <div class="card">
+    <h2 nz-typography>Settings</h2>
+    <form nz-form [formGroup]="settingsForm" [nzLayout]="'horizontal'" (ngSubmit)="onSubmit()">
+      <nz-form-item>
+        <nz-form-label >SSH IP address</nz-form-label>
+        <nz-form-control [nzErrorTip]="'sshIpAddress is required'" [nzValidateStatus]="settingsForm.controls.sshIpAddress">
+          <input  nz-input formControlName="sshIpAddress" id="sshIpAddress" placeholder="sshIpAddress" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label >SSH Port</nz-form-label>
+        <nz-form-control [nzErrorTip]="'sshPort is required'" [nzValidateStatus]="settingsForm.controls.sshPort">
+          <input  nz-input formControlName="sshPort" id="sshPort" placeholder="sshPort"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label >SSH User</nz-form-label>
+        <nz-form-control [nzErrorTip]="'sshUser is required'" [nzValidateStatus]="settingsForm.controls.sshUser" >
+          <input nz-input formControlName="sshUser" id="sshUser" placeholder="sshUser" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label >SSH Password</nz-form-label>
+        <nz-form-control [nzErrorTip]="'sshPassword is required'" [nzValidateStatus]="settingsForm.controls.sshPassword">
+          <input  nz-input formControlName="sshPassword" id="sshPassword" placeholder="sshPassword" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label >Copy config file</nz-form-label>
+        <nz-form-control [nzErrorTip]="'routeToCopyConfigFile is required'" [nzValidateStatus]="settingsForm.controls.routeToCopyConfigFile">
+          <input  nz-input formControlName="routeToCopyConfigFile" id="routeToCopyConfigFile" placeholder="routeToCopyConfigFile" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label >Move config file</nz-form-label>
+        <nz-form-control [nzErrorTip]="'commandToMoveConfigFile is required'" [nzValidateStatus]="settingsForm.controls.commandToMoveConfigFile">
+          <input  nz-input formControlName="commandToMoveConfigFile" id="commandToMoveConfigFile" placeholder="commandToMoveConfigFile" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label >Restart service</nz-form-label>
+        <nz-form-control [nzErrorTip]="'commandToRestartService is required'" [nzValidateStatus]="settingsForm.controls.commandToRestartService">
+          <input  nz-input formControlName="commandToRestartService" id="commandToRestartService" placeholder="commandToRestartService" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+      @if (isEditing()){
+        <div nz-flex nzGap="small" nzJustify="flex-end">
+          <button nz-button   nzShape="round"  type="submit" >Save</button>
+          <button nz-button nzDanger  nzType="primary" nzShape="round" type="button" (click)="edit()" >Cancel</button>
+        </div>
+      } @else {
+        <div nz-flex nzGap="small" nzJustify="flex-end">
+          <button nz-button  nzType="primary" nzShape="round" (click)="edit()" type="button" >Edit</button>
+        </div>
+      }
+      </nz-form-item>
+
+    </form>
+  </div>
+</div>

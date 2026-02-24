@@ -32,13 +32,31 @@ import {Device} from '../../models/Device';
 export class DevicesFormModalComponent {
 
   constructor() {
+    // this effect reset all form fields on close
     effect(() => {
-      this.modalVisible();
-      this.modalReset();
+      const visible = this.modalVisible();
+      if (!visible) {
+        this.form.reset();
+        this.form.markAsPristine();
+        this.form.markAsUntouched();
+        this.modalTitle.set("New device");
+      }
     });
+    // this effect set the device data on form to edit an existing device
     effect(() => {
-      this.deviceEditing();
-      this.setDeviceDataToForm();
+      const device = this.deviceToEdit();
+      const networks = this.listOfNetworks();
+
+      // esperar a que ambos existan
+      if (!device || !networks.length) return;
+      this.modalTitle.set("Editing device");
+      this.form.patchValue({
+        name: device.name,
+        category: device.category,
+        mac_address: device.mac_address,
+        ip_address: device.ip_address,
+        network_id: device.network_id
+      });
     });
   }
 
@@ -49,39 +67,26 @@ export class DevicesFormModalComponent {
     category: ['', Validators.required],
     mac_address: ['',[ Validators.required, Validators.pattern("^([0-9A-F]{2}:){5}([0-9A-F]{2})$")]],
     ip_address: ['', [Validators.required, Validators.pattern("^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$")]],
-    network_id: ['', Validators.required],
+    network_id: [0, Validators.required],
   });
 
   // FORM Submit
-  submitSave = output<any>()
+  submitSave = output<any>();
+  submitUpdate = output<any>();
   onSubmit() {
-    // conditional if it is editing or not.
-    this.submitSave.emit(this.form.getRawValue());
-  }
-
-  // MODAL
-  modalVisible = input<boolean>();
-  modalClose = output();
-  modalReset(){
-    if(!this.modalVisible()){
-      this.form.reset();
-      this.form.markAsPristine();
-      this.form.markAsUntouched();
-      this.modalClose.emit();
+    if (this.deviceToEdit() === null) {
+      this.submitSave.emit(this.form.getRawValue());
+    }else {
+      this.submitUpdate.emit(this.form.getRawValue());
     }
   }
 
+  // MODAL
+  modalTitle = signal("New device")
+  modalVisible = input<boolean>();
+  modalClose = output();
+
   listOfNetworks = input<{id: number, name: string}[]>([]);
   deviceToEdit= input<Device|null>();
-  deviceEditing = input<boolean>();
-  setDeviceDataToForm(){
-    this.form.patchValue({
-      name: this.deviceToEdit()?.name,
-      category: this.deviceToEdit()?.category,
-      mac_address: this.deviceToEdit()?.mac_address,
-      ip_address: this.deviceToEdit()?.ip_address,
-      network_id: this.deviceToEdit()?.network_name.toString()
-    });
-  }
 
 }

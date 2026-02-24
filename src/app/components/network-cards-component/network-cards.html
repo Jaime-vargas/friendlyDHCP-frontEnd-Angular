@@ -7,7 +7,11 @@
   } @else {
     @for (network of networks(); track network.id){
       <div class="networkCard">
-        <h2 nz-typography>{{ network.name }}</h2>
+        <div nz-flex nzJustify="space-between">
+          <h2 nz-typography>{{ network.name }}</h2>
+          <button nz-button nzType="primary" nzShape="round" (click)="edit.emit(network)" ><nz-icon nzType="edit" nzTheme="outline" /></button>
+        </div>
+
         <div class="networkCardItem">
           <div>
             <p nz-typography>Subnet:</p>
@@ -59,7 +63,6 @@
             <p nz-typography>Devices on network:</p>
             <h4 nz-typography>{{network.devices_count}}</h4>
           </div>
-          <button nz-button nzType="primary" nzShape="round">Edit network</button>
         </div>
       </div>
     }

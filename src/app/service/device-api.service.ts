@@ -18,16 +18,15 @@ export class DeviceApiService extends ApiURLBaseService {
       .pipe(catchError(this.handleError));
   }
 
-  getById(id: number): Observable<Device> {
-    return this.http
-      .get<Device>(`${this.baseUrl}/devices/${id}`)
-      .pipe(catchError(this.handleError));
-  }
-
   create(dto: DeviceCreateDto): Observable<Device> {
     return this.http
       .post<Device>(`${this.baseUrl}/devices`, dto)
       .pipe(catchError(this.handleError));
+  }
+
+  update(id: number, dto: DeviceCreateDto): Observable<Device> {
+    return this.http.put<Device>(`${this.baseUrl}/devices/${id}`, dto)
+    .pipe(catchError(this.handleError));
   }
 
   delete(id: number): Observable<void> {
