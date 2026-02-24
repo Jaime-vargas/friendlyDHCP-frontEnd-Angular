@@ -27,10 +27,10 @@ export class DevicesTable {
 
   columns = signal([
     { key: 'name', title: 'Name', compare: (a: Device, b: Device) => a.name.localeCompare(b.name), priority: 1 },
-    { key: 'category', title: 'Category', compare: false, priority: false },
-    { key: 'mac_address', title: 'MAC Address', compare: false, priority: false },
-    { key: 'ip_address', title: 'IP Address', compare: false, priority: false },
-    { key: 'network_name', title: 'Network', compare: false, priority: false },
+    { key: 'category', title: 'Category', compare: (a: Device, b: Device) => a.category.localeCompare(b.category), priority: false },
+    { key: 'mac_address', title: 'MAC Address', compare: (a: Device, b: Device) => a.mac_address.localeCompare(b.mac_address), priority: false },
+    { key: 'ip_address', title: 'IP Address', compare: (a: Device, b: Device) => a.ip_address.localeCompare(b.ip_address), priority: false },
+    { key: 'network_name', title: 'Network', compare: (a: Device, b: Device) => a.network_name.localeCompare(b.network_name), priority: false },
     { key: 'action', title: 'Actions', compare: false, priority: false },
   ]);
   devices = input.required<Device[]>();
