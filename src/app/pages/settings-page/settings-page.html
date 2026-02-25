@@ -1,6 +1,10 @@
 <app-top-bar-component></app-top-bar-component>
 <div class="mainContent">
   <div class="card">
+    <h2 nz-typography>Generate configuration and restart service</h2>
+    <button nz-button  nzType="default" nzShape="round" type="button" (click)="showApplyConfig()" [nzLoading]="loadingApply()">Apply</button>
+  </div>
+  <div class="card">
     <h2 nz-typography>Settings</h2>
     <form nz-form [formGroup]="settingsForm" [nzLayout]="'horizontal'" (ngSubmit)="onSubmit()">
       <nz-form-item>
@@ -60,4 +64,5 @@
 
     </form>
   </div>
+
 </div>

@@ -18,12 +18,25 @@ export class ConfigApiService extends ApiURLBaseService {
       .pipe(catchError(this.handleError));
   }
 
+  apply(): Observable<void> {
+    return this.http
+      .post<void>(`${this.baseUrl}/configuration/apply`,{})
+      .pipe(catchError(this.handleError));
+  }
+
   update(settings: Settings): Observable<Settings> {
     return this.http.post<Settings>(`${this.baseUrl}/configuration`, settings)
       .pipe(catchError(this.handleError));
   }
 
   private handleError(error: any) {
-    return throwError(() => error.error);
+
+    const message =
+      error?.error?.message ||   // backend JSON
+      error?.error ||            // backend texto plano
+      error?.message ||          // Angular HttpErrorResponse
+      `Error HTTP ${error.status}`;
+
+    return throwError(() => new Error(message));
   }
 }

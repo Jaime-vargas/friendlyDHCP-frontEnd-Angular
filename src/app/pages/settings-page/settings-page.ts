@@ -10,6 +10,8 @@ import {ConfigApiService} from '../../service/config-api.service';
 import {Settings} from '../../models/settings';
 import {AppModalService} from '../../service/app-modal.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {Device} from '../../models/Device';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-settings-page',
@@ -29,7 +31,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 export class SettingsPage {
 
   private configApiService: ConfigApiService = inject(ConfigApiService)
-  constructor(private message: NzMessageService) {
+  constructor(private message: NzMessageService, private modal: NzModalService) {
     this.settingsForm.disable();
     this.getSettings();
   }
@@ -57,6 +59,22 @@ export class SettingsPage {
     })
   }
 
+  loadingApply = signal(false);
+  applySettings(): void {
+    this.configApiService.apply().subscribe({
+      error: (error) => {
+        this.loadingApply.set(false);
+        this.appModalService.showError(
+          error || "Error API on apply settings."
+        );
+
+      },complete: () => {
+        this.createSuccessMessage('config apply successfully.');
+        this.loadingApply.set(false);
+      }
+    });
+  }
+
   onSubmit(){
     this.configApiService.update(this.settingsForm.getRawValue()).subscribe({
       next: data => {
@@ -71,6 +89,7 @@ export class SettingsPage {
         this.setFormData();
         this.edit();
         this.createSuccessMessage('Saved successfully.');
+
       }
     })
   }
@@ -99,8 +118,22 @@ export class SettingsPage {
       commandToRestartService: this.settings()?.commandToRestartService
     })
   }
+  showApplyConfig(): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure you want to apply configuration?',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        this.loadingApply.set(true)
+        this.applySettings();
+      },
+      nzCancelText: 'No',
+    });
+  }
 
-  protected edit() {
+
+  edit() {
     if (!this.isEditing()) {
       this.settingsForm.enable();
       this.isEditing.set(true)
