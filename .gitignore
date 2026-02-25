@@ -47,5 +47,5 @@ Thumbs.db
 # Docker
 
 /Dockerfile
-
 /nginx.conf
+/angular-dhcpfriendly.tar

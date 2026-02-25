@@ -1,59 +1,153 @@
-# FriendlyDhcpAngular
+# FriendlyDHCP – DHCP Configuration Manager
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.3.
+Aplicación web desarrollada en **Angular** para la administración de redes y dispositivos, con generación automática del archivo `dhcpd.conf` y despliegue hacia un servidor Linux.
 
-## Development server
+El sistema permite gestionar redes, reservas de dispositivos (MAC + IP fija) y aplicar la configuración directamente al servidor DHCP mediante SSH, automatizando completamente el proceso de edición manual del archivo de configuración.
 
-To start a local development server, run:
+---
+
+Tecnologías utilizadas
+
+- **Angular**
+- **TypeScript**
+- **Angular Signals** (`signal`, `computed`, `effect`)
+- **Ng-Zorro Ant Design**
+- **Reactive Forms**
+- **Docker**
+- **Nginx (producción)**
+- Backend propio en **Java + Spring Boot**
+
+---
+
+## Funcionalidades
+
+### Gestión de Redes (Subnets)
+
+- Crear múltiples redes
+- Configurar:
+  - Subnet
+  - Netmask
+  - Rango de IP
+  - Router
+  - DNS primario/secundario
+  - Lease time
+- Edición mediante modal
+- Validación de formato
+- Prevención de duplicados
+
+![networks.png](screenshots/networks.png)
+![network-edit.png](screenshots/network-edit.png)
+![network-new.png](screenshots/network-new.png)
+---
+
+### Gestión de Dispositivos 
+
+- Registro de dispositivos con:
+  - Nombre
+  - Categoría
+  - Dirección MAC
+  - Dirección IP fija
+  - Red asociada
+- Validación de formato MAC (regex)
+- Validación de IP duplicada
+- Limpieza de caracteres inválidos
+- Confirmación antes de eliminar
+
+![devices.png](screenshots/devices.png)
+![device-edit.png](screenshots/device-edit.png)
+![device-new.png](screenshots/device-new.png)
+---
+
+El sistema genera automáticamente el archivo `dhcpd.conf` basado en la información almacenada en base de datos.
+
+#### Flujo:
+
+1. El frontend llama al endpoint `/configuration/apply`
+2. El backend:
+  - Genera el archivo `dhcpd.conf`
+  - Lo copia vía SSH a un servidor Linux
+  - Ejecuta el comando configurado (ej. reiniciar contenedor Docker del DHCP)
+3. Devuelve respuesta de éxito/error
+4. El frontend muestra notificación 
+
+Antes de ejecutar, existe confirmación modal para evitar errores accidentales.
+
+![config.png](screenshots/config.png)
+![config-edit.png](screenshots/config-edit.png)
+![config-confirm.png](screenshots/config-confirm.png)
+---
+
+## Validaciones 
+
+El sistema previene errores comunes mediante:
+
+- Validación de formato MAC
+- Validación de formato IP
+- Prevención de duplicados:
+  - MAC duplicada
+  - IP duplicada
+  - Nombre duplicado
+- Limpieza de caracteres
+- Confirmación antes de eliminar registros
+- Confirmación antes de aplicar configuración
+
+---
+
+## Arquitectura 
+
+Estructura basada en separación de responsabilidades:
+
+```
+app
+├── components
+│ ├── devices-form-modal-component
+│ ├── devices-table-component
+│ ├── network-cards-component
+│ ├── network-form-modal-component
+│ ├── side-bar-menu-component
+│ └── top-bar-component
+├── models
+│ ├── Device.ts
+│ ├── Network.ts
+│ ├── DTOs
+│ └── ApiError.ts
+├── pages
+│ ├── devices-page
+│ ├── networks-page
+│ ├── settings-page
+│ └── about
+└── service
+├── device-api.service.ts
+├── network-api.service.ts
+├── config-api.service.ts
+├── app-modal.service.ts
+└── api-url-base.service.ts
+```
+### Principios aplicados
+
+- Separación entre UI y acceso a datos
+- Componentes desacoplados
+- Uso de Signals para estado reactivo
+- Formularios reactivos
+- Observables para comunicación HTTP
+- Feedback visual mediante notificaciones
+---
+## Despliegue
+
+- Construcción del frontend con Docker
+- Servido mediante Nginx
+- Desplegado en servidor Linux
+- Red interna empresarial
+
+> NOTA: El backend (Spring Boot) se ejecuta de forma independiente.
+
+## ▶ Cómo ejecutar el frontend
 
 ```bash
+git clone <repo>
+cd friendlydhcp
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
