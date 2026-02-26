@@ -36,6 +36,13 @@ export class DeviceApiService extends ApiURLBaseService {
   }
 
   private handleError(error: any) {
-    return throwError(() => error.error);
+
+    const message =
+      error?.error?.message ||   // backend JSON
+      error?.error ||            // backend texto plano
+      error?.message ||          // Angular HttpErrorResponse
+      `Error HTTP ${error.status}`;
+
+    return throwError(() => new Error(message));
   }
 }
