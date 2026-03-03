@@ -8,9 +8,15 @@
   <h2 nz-typography>{{ modalTitle() }}</h2>
   <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div nz-flex nzGap="small">
-
+      <nz-form-item>
+        <nz-form-label>Name</nz-form-label>
+        <nz-form-control [nzErrorTip]="'name is required'" [nzValidateStatus]="form.controls.name">
+          <input nz-input formControlName="name" id="name" placeholder="name" />
+        </nz-form-control>
+      </nz-form-item>
     </div>
     <div nz-flex nzGap="small">
+
       <nz-form-item>
         <nz-form-label>Category</nz-form-label>
         <nz-form-control [nzErrorTip]="'category is required'" [nzValidateStatus]="form.controls.category">
